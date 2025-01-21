@@ -166,10 +166,19 @@ class SnakeGame {
         let touchStartX = 0;
         let touchStartY = 0;
 
+        let longPressTimer;
+
         this.canvas.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             this.touchStartTime = Date.now();
+            
+            // 设置长按检测定时器
+            longPressTimer = setTimeout(() => {
+                this.isBoost = true;
+                this.gameSpeed = this.difficulties[this.currentDifficulty].boostSpeed;
+            }, this.longPressThreshold);
+            
             e.preventDefault();
         });
 
@@ -200,19 +209,17 @@ class SnakeGame {
                 }
             }
 
-            // 处理加速
-            if (touchDuration >= this.longPressThreshold) {
-                this.isBoost = false;
-                this.gameSpeed = this.difficulties[this.currentDifficulty].baseSpeed;
-            }
+            // 清除长按定时器并重置加速状态
+            clearTimeout(longPressTimer);
+            this.isBoost = false;
+            this.gameSpeed = this.difficulties[this.currentDifficulty].baseSpeed;
             e.preventDefault();
         });
 
         this.canvas.addEventListener('touchcancel', () => {
-            if (this.isBoost) {
-                this.isBoost = false;
-                this.gameSpeed = this.difficulties[this.currentDifficulty].baseSpeed;
-            }
+            clearTimeout(longPressTimer);
+            this.isBoost = false;
+            this.gameSpeed = this.difficulties[this.currentDifficulty].baseSpeed;
         });
     }
 
