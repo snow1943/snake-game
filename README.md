@@ -35,6 +35,4 @@
 ## 在线游玩
 
 游戏已部署在GitHub Pages上，可以直接访问以下链接进行游玩：
-[点击开始游戏](https://[你的GitHub用户名].github.io/snake-game/)
-
-注意：请将链接中的[你的GitHub用户名]替换为实际的GitHub用户名。
+[点击开始游戏](https://snow1943.github.io/snake-game/)
