@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>贪吃蛇大作战</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, #1a1a1a, #4a4a4a);
+            padding: 20px;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                gap: 0;
+                padding: 10px;
+            }
+
+            .game-info {
+                display: none;
+            }
+
+            #gameCanvas {
+                margin-bottom: 140px;
+            }
+
+            .instructions {
+                top: auto;
+                bottom: 160px;
+            }
+
+            .game-controls {
+                display: block !important; /* 强制显示，覆盖默认样式 */
+            }
+        }
+
+        #gameCanvas {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #score {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .difficulty-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: white;
+        }
+
+        .difficulty-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .difficulty-button.easy {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .difficulty-button.medium {
+            background: linear-gradient(45deg, #FFA726, #FB8C00);
+        }
+
+        .difficulty-button.hard {
+            background: linear-gradient(45deg, #EF5350, #E53935);
+        }
+
+        .instructions {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            pointer-events: none;
+            text-align: left;
+            max-width: 300px;
+        }
+
+        .instructions h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .instructions p {
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .game-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            z-index: 100;
+            margin-bottom: 10px;
+            display: none; /* 默认隐藏 */
+        }
+
+        .control-button {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .control-button:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .control-up { top: 0; left: 65px; }
+        .control-down { bottom: 0; left: 65px; }
+        .control-left { top: 35px; left: 0; }
+        .control-right { top: 35px; right: 0; }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                gap: 0;
+                padding: 10px;
+            }
+
+            .game-info {
+                display: none;
+            }
+
+            #gameCanvas {
+                margin-bottom: 140px;
+            }
+
+            .instructions {
+                top: auto;
+                bottom: 160px;
+            }
+
+            .game-controls {
+                display: block !important; /* 强制显示，覆盖默认样式 */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .game-controls {
+                display: none !important; /* 强制隐藏，确保在PC端不显示 */
+            }
+
+            .game-info {
+                margin-right: 20px;
+                text-align: left;
+            }
+
+            .game-title {
+                display: block !important;
+            }
+
+            .instructions {
+                right: 20px;
+                top: 20px;
+                width: auto;
+                text-align: left;
+                transform: none;
+            }
+        }
+
+            .game-info {
+                margin: 0;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .game-info h1 {
+                font-size: 20px !important;
+                margin: 0 !important;
+            }
+
+            .game-info p {
+                font-size: 12px !important;
+                margin: 0 !important;
+            }
+
+            #score {
+                font-size: 16px !important;
+                margin: 0 !important;
+            }
+
+            .game-controls {
+                display: block;
+            }
+
+            .instructions {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                font-size: 12px;
+                width: 90%;
+                max-width: 400px;
+                background: rgba(0, 0, 0, 0.6);
+                padding: 8px;
+                border-radius: 8px;
+                z-index: 10;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <div class="game-info" style="text-align: left; display: flex; flex-direction: column; gap: 10px; margin-right: 20px;">
+        <h1 class="game-title" style="color: #fff; font-size: 24px; margin: 0; display: none;">贪吃蛇大作战</h1>
+        <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+            <p style="color: #aaa; font-size: 14px; margin: 0;">由海明和AI共同设计开发</p>
+            <div id="score" style="margin: 0;">分数: 0</div>
+        </div>
+    </div>
+    <div style="position: relative;">
+        <canvas id="gameCanvas"></canvas>
+        <div class="instructions">
+            <h3>操作说明</h3>
+            <p>PC端：方向键控制移动，长按任意方向键加速</p>
+            <p>移动端：滑动控制方向，长按屏幕加速</p>
+        </div>
+        <div class="difficulty-buttons" id="difficultyButtons">
+            <button class="difficulty-button easy" data-difficulty="easy">简单</button>
+            <button class="difficulty-button medium" data-difficulty="medium">中等</button>
+            <button class="difficulty-button hard" data-difficulty="hard">困难</button>
+        </div>
+        <div class="game-controls">
+            <div class="control-button control-up">↑</div>
+            <div class="control-button control-down">↓</div>
+            <div class="control-button control-left">←</div>
+            <div class="control-button control-right">→</div>
+        </div>
+    </div>
+</body>
+<script src="game.js"></script>
+</html>
