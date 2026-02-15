@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -43,7 +44,8 @@
             }
 
             .game-controls {
-                display: block !important; /* 强制显示，覆盖默认样式 */
+                display: block !important;
+                /* 强制显示，覆盖默认样式 */
             }
         }
 
@@ -85,7 +87,7 @@
 
         .difficulty-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .difficulty-button.easy {
@@ -137,7 +139,8 @@
             border-radius: 15px;
             z-index: 100;
             margin-bottom: 10px;
-            display: none; /* 默认隐藏 */
+            display: none;
+            /* 默认隐藏 */
         }
 
         .control-button {
@@ -160,10 +163,25 @@
             background: rgba(255, 255, 255, 0.4);
         }
 
-        .control-up { top: 0; left: 65px; }
-        .control-down { bottom: 0; left: 65px; }
-        .control-left { top: 35px; left: 0; }
-        .control-right { top: 35px; right: 0; }
+        .control-up {
+            top: 0;
+            left: 65px;
+        }
+
+        .control-down {
+            bottom: 0;
+            left: 65px;
+        }
+
+        .control-left {
+            top: 35px;
+            left: 0;
+        }
+
+        .control-right {
+            top: 35px;
+            right: 0;
+        }
 
         @media (max-width: 768px) {
             body {
@@ -186,13 +204,15 @@
             }
 
             .game-controls {
-                display: block !important; /* 强制显示，覆盖默认样式 */
+                display: block !important;
+                /* 强制显示，覆盖默认样式 */
             }
         }
 
         @media (min-width: 769px) {
             .game-controls {
-                display: none !important; /* 强制隐藏，确保在PC端不显示 */
+                display: none !important;
+                /* 强制隐藏，确保在PC端不显示 */
             }
 
             .game-info {
@@ -213,55 +233,57 @@
             }
         }
 
-            .game-info {
-                margin: 0;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-            }
+        .game-info {
+            margin: 0;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
 
-            .game-info h1 {
-                font-size: 20px !important;
-                margin: 0 !important;
-            }
+        .game-info h1 {
+            font-size: 20px !important;
+            margin: 0 !important;
+        }
 
-            .game-info p {
-                font-size: 12px !important;
-                margin: 0 !important;
-            }
+        .game-info p {
+            font-size: 12px !important;
+            margin: 0 !important;
+        }
 
-            #score {
-                font-size: 16px !important;
-                margin: 0 !important;
-            }
+        #score {
+            font-size: 16px !important;
+            margin: 0 !important;
+        }
 
-            .game-controls {
-                display: block;
-            }
+        .game-controls {
+            display: block;
+        }
 
-            .instructions {
-                position: absolute;
-                top: 10px;
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-                font-size: 12px;
-                width: 90%;
-                max-width: 400px;
-                background: rgba(0, 0, 0, 0.6);
-                padding: 8px;
-                border-radius: 8px;
-                z-index: 10;
-                text-align: center;
-            }
+        .instructions {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            font-size: 12px;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px;
+            border-radius: 8px;
+            z-index: 10;
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
-    <div class="game-info" style="text-align: left; display: flex; flex-direction: column; gap: 10px; margin-right: 20px;">
+    <div class="game-info"
+        style="text-align: left; display: flex; flex-direction: column; gap: 10px; margin-right: 20px;">
         <h1 class="game-title" style="color: #fff; font-size: 24px; margin: 0; display: none;">贪吃蛇大作战</h1>
         <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
-            <p style="color: #aaa; font-size: 14px; margin: 0;">由海明和AI共同设计开发</p>
+            <p style="color: #aaa; font-size: 14px; margin: 0;">由Aiming的下一行和AI共同设计开发</p>
             <div id="score" style="margin: 0;">分数: 0</div>
         </div>
     </div>
@@ -286,4 +308,5 @@
     </div>
 </body>
 <script src="game.js"></script>
+
 </html>
